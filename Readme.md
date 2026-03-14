@@ -36,7 +36,7 @@ Gitcode：[https://gitcode.com/BrokenDreamTech/AndroidNDKTips](https://gitcode.c
 
 1. [安卓中使用Xmake编译so并配合Jni使用](001HiXmakeAndJni/Readme.md)
 
-2. 111
+2. [安卓中使用Xmake编译so后并导入项目使用](002HiXmake/Readme.md)
 
 
 
