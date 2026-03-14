@@ -17,14 +17,6 @@
 
 
 
-## 效果图片
-
-#### 🟢温馨提示：如果图片无法加载请前往国内Gitcode镜像仓库
-
-![image01](./ReadmeRes/image01.png)
-
-![image01](./ReadmeRes/image02.png)
-
 ## 代码地址
 
 🟢温馨提示：如果图片无法加载请前往国内Gitcode镜像仓库
@@ -34,32 +26,17 @@ Github：[https://github.com/BrokenDreamTech/AndroidNDKTips](https://github.com/
 Gitcode：[https://gitcode.com/BrokenDreamTech/AndroidNDKTips](https://gitcode.com/BrokenDreamTech/AndroidNDKTips)
 
 
-## 特性
+## 目录
 
-- [x] 111
-- [x] 111
-- [x] 111
-- [x] 111
+#### 视频导航
 
+1. 待定
 
-## 环境
+#### 图文目录
 
-Android Studio 2025.3.2
-xmake 3.0.7
-
-## 教程
-
-#### 视频教程
-
-传送门：
-
-#### 图文教程
-
-1. 111
+1. [安卓中使用Xmake编译so并配合Jni使用](001HiXmakeAndJni/Readme.md)
 
 2. 111
-   
-3. 111
 
 
 
