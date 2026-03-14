@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -10,67 +11,41 @@ val archList = listOf(
 )
 
 android {
-    namespace = "com.brokendream.hixmakeandjni"
+    namespace = "com.brokendream.hixmake"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
         }
     }
-    ndkVersion = "29.0.13599879"
 
     defaultConfig {
-        applicationId = "com.brokendream.hixmakeandjni"
+        applicationId = "com.brokendream.hixmake"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
             abiFilters += archList
         }
-
         externalNativeBuild {
             cmake {
                 cppFlags += "-std=c++17"
             }
         }
     }
-    // 签名
-    val releaseSigning = "release"
-    signingConfigs {
-        create(releaseSigning) {
-            storeFile = file("./brokendream.jks")
-            storePassword = "123456"
-            keyAlias = "key0"
-            keyPassword = "123456"
-            enableV1Signing = true
-            enableV2Signing = true
-        }
-    }
+
     buildTypes {
-        debug {
-            signingConfig = signingConfigs.getByName(releaseSigning)
-            isMinifyEnabled = false
-            isShrinkResources = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-
         release {
-            signingConfig = signingConfigs.getByName(releaseSigning)
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
-
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -96,17 +71,14 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-
 androidComponents {
     onVariants { variant ->
         // 设置so目录
-        // 关键点：调用 addStaticSourceDirectory，这是 AGP 9.x 中添加源码/资源/so的唯一正统且未废弃的方法！
         variant.sources.jniLibs?.addStaticSourceDirectory("src/main/cpp/xmake/build/android")
     }
 }
 
 
-// 1. 获取 NDK 目录的 Provider (AGP 9.1 专有方式)
 val ndkDirProvider = androidComponents.sdkComponents.ndkDirectory
 
 // 2. 注册 xmake 构建任务
@@ -147,8 +119,6 @@ val taskNames = archList.map { arch ->
     taskName
 }
 
-// 3. 任务与 Kotlin 编译任务关联
-// 【核心修改】使用 configureEach 代替直接使用 { ... }，这是 Gradle 8.0+ 要求的懒加载写法
 tasks.withType<KotlinCompile>().configureEach {
     taskNames.forEach { dependsOn(it) }
 }
